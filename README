@@ -8,8 +8,10 @@ SYNOPSIS
       my $email = $handler->extract(-as_email => 'emailaddress');
 
 DESCRIPTION
-    CGI::Untaint::email input handler verifies that it is a valid RFC2822 email
-    address (which Email::Valid believes to be valid).
+    CGI::Untaint::email input handler verifies that it is a valid RFC2822
+    mailbox format.
+
+    The resulting value will be a Mail::Address instance.
 
 AUTHOR
     Tatsuhiko Miyagawa <miyagawa@bulknews.net>

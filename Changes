@@ -1,5 +1,9 @@
 Revision history for Perl extension CGI::Untaint::email.
 
+0.03  Mon Oct 29 20:28:29 JST 2001
+	* returned value is not string, but subclass of Mail::Address
+	  which overloads.
+
 0.02  Fri Oct 26 22:53:01 JST 2001
 	- Fixed is_valid() (Thanks to Tony Bowden)
 	- onto CPAN

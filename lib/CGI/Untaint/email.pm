@@ -2,10 +2,11 @@ package CGI::Untaint::email;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use base qw(CGI::Untaint::printable);
-require Email::Valid;
+use Email::Valid;
+use Mail::Address;
 
 my $validator = Email::Valid->new(
     -fudge => 0,
@@ -16,8 +17,18 @@ my $validator = Email::Valid->new(
 
 sub is_valid {
     my $self = shift;
-    return $validator->address($self->value);
+    if ($validator->address($self->value)) {
+	my @address = Mail::Address::overload->parse($self->value);
+	return $self->value($address[0]);
+    }
+    return;
 }
+
+package Mail::Address::overload;
+use base qw(Mail::Address);
+use overload
+    '""' => sub { $_[0]->format },
+    fallback => 1;
 
 1;
 __END__
@@ -36,7 +47,9 @@ CGI::Untaint::email - validate an email address
 =head1 DESCRIPTION
 
 CGI::Untaint::email input handler verifies that it is a valid RFC2822
-email address (which Email::Valid believes to be valid).
+mailbox format.
+
+The resulting value will be a Mail::Address instance.
 
 =head1 AUTHOR
 

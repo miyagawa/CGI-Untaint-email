@@ -8,5 +8,6 @@ WriteMakefile(
 	Test::More => 0.18,
 	CGI::Untaint => 0.07,
 	Email::Valid => 0.13,
+	Mail::Address => 1.40,
     },
 );
